@@ -39,15 +39,56 @@ npm run dev
 # открыть http://localhost:5173
 ```
 
-## API
-`/api/notes`
-- `GET /` — все заметки, `?category=work` для фильтра
-- `GET /search?q=текст` — поиск
-- `GET /:id` — заметка по id
-- `POST /` — создать
-- `PUT /:id` — обновить
-- `DELETE /:id` — удалить
+### Swagger-lite
+**Base URL:** `http://localhost:3000/api/notes`
+
+- **GET /**  
+  - Query: `category` (string, optional)  
+  - 200: `{ success: true, data: Note[] }`
+
+- **GET /search**  
+  - Query: `q` (string, required)  
+  - 200: `{ success: true, data: Note[] }`  
+  - 400: `{ success: false, error }`
+
+- **GET /:id**  
+  - Params: `id` (number)  
+  - 200: `{ success: true, data: Note }`  
+  - 404: `{ success: false, error }`
+
+- **POST /**  
+  - Body: `{ title: string, content: string, category?: string }`  
+  - 201: `{ success: true, data: Note }`  
+  - 400: `{ success: false, error }`
+
+- **PUT /:id**  
+  - Body: частичное обновление `{ title?, content?, category? }`  
+  - 200: `{ success: true, data: Note }`  
+  - 404: `{ success: false, error }`
+
+- **DELETE /:id**  
+  - 200: `{ success: true, data: Note }`  
+  - 404: `{ success: false, error }`
+
+Тип `Note`:  
+`{ id: number, title: string, content: string, category: 'personal' | 'work' | 'shopping' | 'ideas', createdAt: string }`
 
 ## Стек
 - Backend: Express
 - Frontend: React, Vite, SCSS (`sass-embedded`)
+
+## Демонстрация
+
+![Все категории](screenshots/allCategories.png)
+
+Категории:
+![Personal](screenshots/personal.png)
+![Work](screenshots/work.png)
+![Shopping](screenshots/shopping.png)
+![Ideas](screenshots/ideas.png)
+
+Модальное окно для редактирования:
+![Редактирование](screenshots/theWindowForEdit.png)
+
+Демострация в devtools'ах (Network) дергание ручек бекэнда
+![Сеть](screenshots/theNetworkSectionWithRequests.png)
